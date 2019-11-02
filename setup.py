@@ -16,7 +16,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=[
-        'https://github.com/flask-admin/flask-admin/archive/bootstrap4.zip'
+        'flask-admin@git+https://github.com/flask-admin/flask-admin.git'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
