@@ -1,5 +1,6 @@
 {% import 'adminlte/layout.html' as layout with context -%}
 {% import 'admin/static.html' as admin_static with context %}
+{% import 'adminlte/static.html' as adminlte_static with context %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +15,8 @@
   <title>{% block title %}{% if admin_view.category %}{{ admin_view.category }} - {% endif %}{{ admin_view.name }} - {{ admin_view.admin.name }}{% endblock %}</title>
 
   {% block head_css %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome-free.all.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ adminlte_static.url('css/fontawesome-free.all.min.css') }}">
+  <link rel="stylesheet" href="{{ adminlte_static.url('css/adminlte.min.css') }}">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   
   {# <link href="{{ admin_static.url(filename='bootstrap/bootstrap4/swatch/{swatch}/bootstrap.min.css'.format(swatch=config.get('FLASK_ADMIN_SWATCH', 'default')), v='4.2.1') }}" rel="stylesheet"> #}
@@ -80,7 +81,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
             <div class="media">
-              <img src="{{ url_for('static', filename='img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="{{ adminlte_static.url('img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -94,7 +95,7 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <div class="media">
-              <img src="{{ url_for('static', filename='img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="{{ adminlte_static.url('img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
@@ -108,7 +109,7 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <div class="media">
-              <img src="{{ url_for('static', filename='img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="{{ adminlte_static.url('img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
@@ -159,7 +160,7 @@
 
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="{{ admin_view.admin.url }}" class="brand-link">
-      <img src="{{ url_for('static', filename='img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src="{{ adminlte_static.url('img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">{{ admin_view.admin.name }}</span>
     </a>
@@ -167,7 +168,7 @@
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ url_for('static', filename='img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ adminlte_static.url('img/avatar5.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">John Doe</a>
@@ -242,9 +243,9 @@
     <script src="{{ js_url }}" type="text/javascript"></script>
   {% endfor %}
 {% endif %}
-{# <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> #}
-{# <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script> #}
-<script src="{{ url_for('static', filename='js/adminlte.min.js') }}"></script>
+{# <script src="{{ adminlte_static.url('js/jquery.min.js') }}"></script> #}
+{# <script src="{{ adminlte_static.url('js/bootstrap.bundle.min.js') }}"></script> #}
+<script src="{{ adminlte_static.url('js/adminlte.min.js') }}"></script>
 {% endblock tail_js %}
 {% block tail %}
 {% endblock tail %}
