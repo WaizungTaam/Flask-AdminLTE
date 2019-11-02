@@ -14,6 +14,6 @@ class AdminLTE(object):
 
         blueprint = Blueprint('adminlte', __name__,
             template_folder='templates',
-            statc_folder='static',
+            static_folder='static',
             static_url_path=app.static_url_path + '/adminlte')
         app.register_blueprint(blueprint)
