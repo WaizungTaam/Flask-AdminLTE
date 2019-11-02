@@ -1,0 +1,104 @@
+{% macro menu_icon(item) -%}
+  {% set icon_type = item.get_icon_type() %}
+  {%- if icon_type %}
+    {% set icon_value = item.get_icon_value() %}
+    {% if icon_type == 'glyph' %}
+      <i class="glyphicon {{ icon_value }}"></i>
+    {% elif icon_type == 'fa' %}
+      <i class="fa {{ icon_value }}"></i>
+    {% elif icon_type == 'image' %}
+      <img src="{{ url_for('static', filename=icon_value) }}" alt="menu image">
+    {% elif icon_type == 'image-url' %}
+      <img src="{{ icon_value }}" alt="menu image">
+    {% endif %}
+  {% else %}
+    <i class="far fa-circle nav-icon"></i>
+  {% endif %}
+{%- endmacro %}
+
+{% macro menu(menu_root=None) %}
+  {% if menu_root is none %}{% set menu_root = admin_view.admin.menu()[1:] %}{% endif %}
+  {%- for item in menu_root %}
+    {%- if item.is_category() -%}
+      {% set children = item.get_children() %}
+      {%- if children %}
+        {% set class_name = item.get_class_name() or '' %}
+        {%- if item.is_active(admin_view) %}
+        {# <li class="active dropdown{% if class_name %} {{class_name}}{% endif %}"> #}
+        <li class="nav-item has-treeview menu-open{% if class_name %} {{class_name}}{% endif %}">
+        {% else -%}
+        {# <li class="dropdown{% if class_name %} {{class_name}}{% endif %}"> #}
+        <li class="nav-item has-treeview{% if class_name %} {{class_name}}{% endif %}">
+        {%- endif %}
+          {# <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="javascript:void(0)"> #}
+          <a href="#" class="nav-link{% if item.is_active(admin_view) %} active{% endif %}">
+            {% if item.class_name %}<span class="{{ item.class_name }}"></span> {% endif %}
+            {{ menu_icon(item) }}
+            <p>
+              {{ item.name }}
+              {%- if 'dropdown-submenu' in class_name -%}
+              {# <i class="glyphicon glyphicon-chevron-right small"></i> #}
+              <i class="right fas fa-angle-left"></i>
+              {%- else -%}
+              {# <i class="glyphicon glyphicon-chevron-down small"></i> #}
+              <i class="right fas fa-angle-down"></i>
+              {%- endif -%}
+            </p>
+          </a>
+          {# <ul class="dropdown-menu"> #}
+          <ul class="nav nac-treeview">
+          {%- for child in children -%}
+            {%- if child.is_category() -%}
+              {{ menu(menu_root=[child]) }}
+            {% else %}
+              {% set class_name = child.get_class_name() %}
+              {%- if child.is_active(admin_view) %}
+              <li class="nav-item active{% if class_name %} {{class_name}}{% endif %}">
+              {% else %}
+              <li class="nav-item{% if class_name %} {{class_name}}{% endif %}">
+              {%- endif %}
+              <a class="nav-link{% if item.is_active(admin_view) %} active{% endif %}" href="{{ child.get_url() }}"{% if child.target %} target="{{ child.target }}"{% endif %}>
+                {{ menu_icon(child) }}
+                <p>{{ child.name }}</p>
+                </a>
+              </li>
+            {%- endif %}
+          {%- endfor %}
+          </ul>
+        </li>
+      {% endif %}
+    {%- else %}
+      {%- if item.is_accessible() and item.is_visible() -%}
+        {% set class_name = item.get_class_name() %}
+        {%- if item.is_active(admin_view) %}
+        <li class="nav-item active{% if class_name %} {{class_name}}{% endif %}">
+        {%- else %}
+        <li class="nav-item{% if class_name %} {{class_name}}{% endif %}">
+        {%- endif %}
+          <a class="nav-link{% if item.is_active(admin_view) %} active{% endif %}" href="{{ item.get_url() }}"{% if item.target %} target="{{ item.target }}"{% endif %}>
+            {{ menu_icon(item) }}
+            <p>{{ item.name }}</p>
+          </a>
+        </li>
+      {%- endif -%}
+    {% endif -%}
+  {% endfor %}
+{% endmacro %}
+
+{% macro messages() %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        {% if category %}
+        {% set mapping = {'message': 'info', 'error': 'danger'} %}
+        <div class="alert alert-{{ mapping.get(category, category) }} alert-dismissable">
+        {% else %}
+        <div class="alert alert-dismissable">
+        {% endif %}
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+{% endmacro %}
