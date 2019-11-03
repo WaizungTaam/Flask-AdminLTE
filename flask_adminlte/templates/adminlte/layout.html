@@ -25,7 +25,7 @@
         {% set class_name = item.get_class_name() or '' %}
         {%- if item.is_active(admin_view) %}
         {# <li class="active dropdown{% if class_name %} {{class_name}}{% endif %}"> #}
-        <li class="nav-item has-treeview menu-open{% if class_name %} {{class_name}}{% endif %}">
+        <li class="nav-item has-treeview menu-open{% if class_name %} {{ class_name }}{% endif %}">
         {% else -%}
         {# <li class="dropdown{% if class_name %} {{class_name}}{% endif %}"> #}
         <li class="nav-item has-treeview{% if class_name %} {{class_name}}{% endif %}">
@@ -46,7 +46,7 @@
             </p>
           </a>
           {# <ul class="dropdown-menu"> #}
-          <ul class="nav nac-treeview">
+          <ul class="nav nav-treeview">
           {%- for child in children -%}
             {%- if child.is_category() -%}
               {{ menu(menu_root=[child]) }}
@@ -57,7 +57,7 @@
               {% else %}
               <li class="nav-item{% if class_name %} {{class_name}}{% endif %}">
               {%- endif %}
-              <a class="nav-link{% if item.is_active(admin_view) %} active{% endif %}" href="{{ child.get_url() }}"{% if child.target %} target="{{ child.target }}"{% endif %}>
+              <a class="nav-link{% if child.is_active(admin_view) %} active{% endif %}" href="{{ child.get_url() }}"{% if child.target %} target="{{ child.target }}"{% endif %}>
                 {{ menu_icon(child) }}
                 <p>{{ child.name }}</p>
                 </a>
