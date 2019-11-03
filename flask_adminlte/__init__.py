@@ -11,6 +11,7 @@ class AdminLTE(object):
         admin = Admin(template_mode='bootstrap4',
             base_template='adminlte/base.html')
         admin.init_app(app)
+        self.admin = admin
 
         blueprint = Blueprint('adminlte', __name__,
             template_folder='templates',
