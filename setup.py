@@ -12,7 +12,7 @@ setuptools.setup(
     description='Integration of Flask-Admin and AdminLTE template.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://gitlab-inet.zkyouxi.com/tanweizhong/zhangkun.oalogin',
+    url='https://github.com/WaizungTaam/Flask-AdminLTE',
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=[
